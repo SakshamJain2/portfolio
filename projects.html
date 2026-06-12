@@ -35,7 +35,34 @@
   </header>
 
   <section class="section container">
-    <div class="grid-2 reveal">
+
+    <!-- Deploy log ticker -->
+    <div class="deploy-log reveal" id="deploy-log"></div>
+
+    <div class="grid-2 stagger">
+
+      <div class="card">
+        <div class="tag-row" style="margin-top:0; margin-bottom:14px;">
+          <span class="badge">live</span>
+        </div>
+        <h3>Vidhya Classes — Web &amp; Android App</h3>
+        <p style="font-family: var(--font-mono); font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">2025 – 2026 · <a href="https://vidhyaclasses.in" target="_blank" rel="noopener">vidhyaclasses.in ↗</a></p>
+        <ul style="list-style:none; padding:0; color:var(--text-muted); font-size:14.5px;">
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Built and shipped the marketing website plus an Android app for an EdTech platform offering video lessons, live classes, and study material for competitive exam prep.</li>
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Designed and deployed the AWS hosting infrastructure (EC2, S3, Route 53, ACM) — the same cloud setup behind the EdTech platform referenced in my Cloud Intern role.</li>
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Set up CI-driven deploys and CloudWatch monitoring so updates to the site and APK ship without manual server work.</li>
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Supported AI-powered features on the platform — personalized career guidance and counselling support surfaced directly in the app.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">Next.js</span>
+          <span class="tag">Android</span>
+          <span class="tag">AWS EC2</span>
+          <span class="tag">S3</span>
+          <span class="tag">Route 53</span>
+          <span class="tag">ACM</span>
+          <span class="tag">CloudWatch</span>
+        </div>
+      </div>
 
       <div class="card">
         <div class="tag-row" style="margin-top:0; margin-bottom:14px;">
@@ -92,5 +119,39 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    (function () {
+      const lines = [
+        { html: '<span class="info">[12:04:01]</span> Cloning repository...' },
+        { html: '<span class="info">[12:04:02]</span> Installing dependencies...' },
+        { html: '<span class="ok">[12:04:14]</span> Build completed in 12.3s' },
+        { html: '<span class="info">[12:04:15]</span> Uploading to AWS S3...' },
+        { html: '<span class="info">[12:04:17]</span> Invalidating CloudFront cache...' },
+        { html: '<span class="ok">[12:04:19]</span> Deployment ready — vidhyaclasses.in' },
+        { html: '<span class="info">[12:04:20]</span> Running health check...' },
+        { html: '<span class="ok">[12:04:21]</span> 200 OK — uptime 99.9%' },
+        { html: '<span class="warn">[12:04:22]</span> 2 Security Hub findings auto-remediated' },
+        { html: '<span class="ok">[12:04:23]</span> All systems operational ✓' },
+      ];
+      const log = document.getElementById("deploy-log");
+      if (!log) return;
+      let i = 0;
+      function addLine() {
+        if (i >= lines.length) {
+          // restart loop after a pause
+          setTimeout(() => { log.innerHTML = ""; i = 0; addLine(); }, 2500);
+          return;
+        }
+        const div = document.createElement("div");
+        div.className = "log-line";
+        div.innerHTML = lines[i].html;
+        log.appendChild(div);
+        if (log.children.length > 6) log.removeChild(log.firstChild);
+        i++;
+        setTimeout(addLine, 450);
+      }
+      addLine();
+    })();
+  </script>
 </body>
 </html>
