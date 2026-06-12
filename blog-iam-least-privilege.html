@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting to least-privilege IAM without breaking everything — Saksham Jain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-prompt">
+        <span class="user">saksham</span><span class="at">@</span><span class="host">devops</span>:~$<span class="cursor"></span>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">menu</button>
+      <div class="nav-links">
+        <a href="index.html">home</a>
+        <a href="experience.html">experience</a>
+        <a href="projects.html">projects</a>
+        <a href="skills.html">skills</a>
+        <a href="blog.html" class="active">blog</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container page-header">
+    <div class="section-label">posts/iam-least-privilege.md</div>
+    <h1>Getting to least-privilege IAM without breaking everything</h1>
+    <p>2026-02-10 · 6 min read</p>
+  </header>
+
+  <article class="section container blog-post-body reveal" style="max-width: 760px;">
+    <p>
+      Over-permissioned IAM roles are one of the most common findings in any AWS Security Hub
+      or Prisma Cloud scan, and one of the scariest to fix. The risk isn't writing a tighter
+      policy — it's writing one that's too tight and quietly breaking a production workflow
+      at 2 AM. Here's the approach that let me tighten dozens of roles in a live, regulated
+      account without a single incident.
+    </p>
+
+    <h2>Start with access patterns, not assumptions</h2>
+    <p>
+      Before touching a single policy, I pulled actual usage data from
+      <code>IAM Access Analyzer</code> and CloudTrail. This tells you what a role
+      <em>actually does</em>, as opposed to what its policy allows it to do — and the gap
+      between those two is usually enormous. Most roles I reviewed used under 15% of their
+      granted permissions.
+    </p>
+
+    <h2>Tackle one role at a time, in non-prod first</h2>
+    <p>
+      It's tempting to batch this work, but a single overly broad change can ripple across
+      every service that assumes a shared role. I worked role-by-role, validating each
+      tightened policy in staging before promoting it. Where possible, I split shared roles
+      into per-service roles — more roles to manage, but each one is independently auditable
+      and blast-radius is contained.
+    </p>
+
+    <h2>Use SCPs and permission boundaries as guardrails</h2>
+    <p>
+      Rather than relying purely on individual role policies, I layered in Service Control
+      Policies at the organization level and permission boundaries at the role level. This
+      means even if a future policy edit is too permissive, the boundary caps what it can
+      actually do — a safety net that catches human error before it becomes an incident.
+    </p>
+
+    <pre><code>{
+  "Effect": "Deny",
+  "Action": [
+    "iam:CreateUser",
+    "iam:CreateAccessKey"
+  ],
+  "Resource": "*",
+  "Condition": {
+    "StringNotEquals": {
+      "aws:RequestedRegion": "ap-south-1"
+    }
+  }
+}</code></pre>
+
+    <h2>Rotate, don't just restrict</h2>
+    <p>
+      Tightening permissions is half the story — the other half is making sure long-lived
+      credentials don't exist to be over-permissioned in the first place. Migrating static
+      keys into <code>AWS Secrets Manager</code> with automatic rotation closed off an entire
+      class of findings, since there was simply nothing left to leak.
+    </p>
+
+    <h2>The result</h2>
+    <p>
+      Across this effort, we cleared 70+ Well-Architected Review high-risk issues and over
+      600 findings from Security Hub and Prisma Cloud — all without a production incident.
+      The playbooks from this work were adopted by three other teams, cutting their average
+      remediation turnaround in half.
+    </p>
+
+    <p style="margin-top: 40px;">
+      <a href="blog.html">← back to blog</a>
+    </p>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© 2026 Saksham Jain — built with curiosity & terraform apply</div>
+      <div style="margin-top:10px;">
+        <a href="mailto:sakshamsj02@gmail.com">email</a>
+        <a href="https://www.linkedin.com/in/sakshamjain02/" target="_blank" rel="noopener">linkedin</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

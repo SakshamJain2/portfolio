@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Saksham Jain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-prompt">
+        <span class="user">saksham</span><span class="at">@</span><span class="host">devops</span>:~$<span class="cursor"></span>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">menu</button>
+      <div class="nav-links">
+        <a href="index.html">home</a>
+        <a href="experience.html">experience</a>
+        <a href="projects.html" class="active">projects</a>
+        <a href="skills.html">skills</a>
+        <a href="blog.html">blog</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container page-header">
+    <div class="section-label">ls ./projects</div>
+    <h1>Projects</h1>
+    <p>Things I've built, secured, and shipped to production.</p>
+  </header>
+
+  <section class="section container">
+    <div class="grid-2 reveal">
+
+      <div class="card">
+        <div class="tag-row" style="margin-top:0; margin-bottom:14px;">
+          <span class="badge">audit-ready</span>
+        </div>
+        <h3>WAR Remediation &amp; DevSecOps Enablement</h3>
+        <p style="font-family: var(--font-mono); font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">Jul 2025 – Nov 2025</p>
+        <ul style="list-style:none; padding:0; color:var(--text-muted); font-size:14.5px;">
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Remediated 70+ Well-Architected Review (WAR) High-Risk Issues and 600+ findings from AWS Security Hub and Prisma Cloud in a regulated production environment, achieving audit readiness.</li>
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Eliminated credential leakage vectors by integrating AWS Secrets Manager, IAM least-privilege policies, and SSM Parameter Store for secure configuration management.</li>
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Authored SOPs and reusable remediation playbooks adopted across 3+ teams, reducing average remediation turnaround by 50%.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">AWS Security Hub</span>
+          <span class="tag">Prisma Cloud</span>
+          <span class="tag">IAM</span>
+          <span class="tag">Secrets Manager</span>
+          <span class="tag">SSM</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tag-row" style="margin-top:0; margin-bottom:14px;">
+          <span class="badge">live</span>
+        </div>
+        <h3>Production Website Deployment &amp; Monitoring — raive.in</h3>
+        <p style="font-family: var(--font-mono); font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">2025 · <a href="https://raive.in" target="_blank" rel="noopener">raive.in ↗</a></p>
+        <ul style="list-style:none; padding:0; color:var(--text-muted); font-size:14.5px;">
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Deployed live production website on AWS EC2 with Nginx reverse proxy, custom domain mapping (Route 53), and TLS via ACM.</li>
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Instrumented real-time uptime monitoring and automated alerting via AWS CloudWatch, achieving sub-2-minute incident notification.</li>
+          <li style="margin-bottom:10px; padding-left:18px; position:relative;"><span style="position:absolute; left:0; color:var(--green); font-family:var(--font-mono);">$</span>Optimized server configuration for high availability; site consistently serves requests with &lt;100ms response time under load.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">EC2</span>
+          <span class="tag">Nginx</span>
+          <span class="tag">Route 53</span>
+          <span class="tag">ACM</span>
+          <span class="tag">CloudWatch</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© 2026 Saksham Jain — built with curiosity & terraform apply</div>
+      <div style="margin-top:10px;">
+        <a href="mailto:sakshamsj02@gmail.com">email</a>
+        <a href="https://www.linkedin.com/in/sakshamjain02/" target="_blank" rel="noopener">linkedin</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terraform modules that actually reduce provisioning errors — Saksham Jain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-prompt">
+        <span class="user">saksham</span><span class="at">@</span><span class="host">devops</span>:~$<span class="cursor"></span>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">menu</button>
+      <div class="nav-links">
+        <a href="index.html">home</a>
+        <a href="experience.html">experience</a>
+        <a href="projects.html">projects</a>
+        <a href="skills.html">skills</a>
+        <a href="blog.html" class="active">blog</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container page-header">
+    <div class="section-label">posts/terraform-provisioning.md</div>
+    <h1>Terraform modules that actually reduce provisioning errors</h1>
+    <p>2025-12-05 · 7 min read</p>
+  </header>
+
+  <article class="section container blog-post-body reveal" style="max-width: 760px;">
+    <p>
+      "Reduce manual provisioning errors" sounds abstract until you've spent an afternoon
+      debugging why a staging RDS instance has a different parameter group than production —
+      again. Standardizing infrastructure provisioning on reusable Terraform modules cut
+      these kinds of mistakes by roughly 60% across our EC2, IAM, S3, and RDS resources.
+      Here's what actually moved the needle.
+    </p>
+
+    <h2>Modules over copy-paste</h2>
+    <p>
+      The biggest source of drift wasn't bad intentions — it was copy-pasted Terraform
+      configs that each picked up small, unintentional differences over time. Wrapping
+      common patterns (an EC2 instance with standard tags and security groups, an RDS
+      instance with the approved parameter group, an S3 bucket with encryption and
+      lifecycle rules baked in) into versioned modules meant every new resource started
+      from the same correct baseline.
+    </p>
+
+    <pre><code>module "app_database" {
+  source            = "./modules/rds-postgres"
+  identifier        = "app-prod-db"
+  instance_class    = "db.t3.medium"
+  allocated_storage = 50
+  multi_az          = true
+  tags = {
+    Environment = "production"
+    Team        = "platform"
+  }
+}</code></pre>
+
+    <h2>Variables with sane defaults, not endless options</h2>
+    <p>
+      Early versions of these modules exposed too many variables, which just moved the
+      "what should this value be?" problem rather than solving it. The fix was opinionated
+      defaults — most teams never need to override them — with explicit overrides only for
+      genuinely environment-specific values like instance size or multi-AZ.
+    </p>
+
+    <h2>State management and remote backends</h2>
+    <p>
+      Centralizing Terraform state in an S3 backend with DynamoDB locking eliminated a
+      whole category of "two people applied at once" problems. Combined with workspace
+      separation per environment, it became much harder to accidentally point a plan at
+      the wrong account.
+    </p>
+
+    <pre><code>terraform {
+  backend "s3" {
+    bucket         = "tfstate-platform"
+    key            = "prod/network/terraform.tfstate"
+    region         = "ap-south-1"
+    dynamodb_table = "tf-locks"
+    encrypt        = true
+  }
+}</code></pre>
+
+    <h2>Plan output as a review artifact</h2>
+    <p>
+      Every change now produces a <code>terraform plan</code> output that's reviewed before
+      <code>apply</code> — treating infrastructure changes with the same rigor as a code
+      review. This single habit caught most of the remaining mistakes before they ever
+      touched a real environment, particularly accidental resource replacements that would
+      have caused downtime.
+    </p>
+
+    <h2>The payoff</h2>
+    <p>
+      None of these changes were individually dramatic, but together they took
+      provisioning from "works most of the time, depends who's doing it" to predictable
+      and repeatable — which is really the whole point of infrastructure as code.
+    </p>
+
+    <p style="margin-top: 40px;">
+      <a href="blog.html">← back to blog</a>
+    </p>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© 2026 Saksham Jain — built with curiosity & terraform apply</div>
+      <div style="margin-top:10px;">
+        <a href="mailto:sakshamsj02@gmail.com">email</a>
+        <a href="https://www.linkedin.com/in/sakshamjain02/" target="_blank" rel="noopener">linkedin</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

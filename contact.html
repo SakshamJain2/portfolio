@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Saksham Jain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-prompt">
+        <span class="user">saksham</span><span class="at">@</span><span class="host">devops</span>:~$<span class="cursor"></span>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">menu</button>
+      <div class="nav-links">
+        <a href="index.html">home</a>
+        <a href="experience.html">experience</a>
+        <a href="projects.html">projects</a>
+        <a href="skills.html">skills</a>
+        <a href="blog.html">blog</a>
+        <a href="contact.html" class="active">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container page-header">
+    <div class="section-label">mail --compose</div>
+    <h1>Get in touch</h1>
+    <p>Open to DevOps, Cloud, and SRE roles. Usually responds within a day.</p>
+  </header>
+
+  <section class="section container">
+    <div class="grid-2">
+
+      <div class="reveal">
+        <h3>Direct contact</h3>
+        <p style="margin-bottom: 20px;">
+          Prefer email or LinkedIn? Reach out directly — both are checked daily.
+        </p>
+        <div class="card" style="font-family: var(--font-mono); font-size: 14px;">
+          <div style="margin-bottom: 10px;"><span style="color: var(--text-muted);">email:</span> <a href="mailto:sakshamsj02@gmail.com">sakshamsj02@gmail.com</a></div>
+          <div style="margin-bottom: 10px;"><span style="color: var(--text-muted);">phone:</span> <span style="color: var(--text);">+91 90797 78470</span></div>
+          <div style="margin-bottom: 10px;"><span style="color: var(--text-muted);">linkedin:</span> <a href="https://www.linkedin.com/in/sakshamjain02/" target="_blank" rel="noopener">/in/sakshamjain02</a></div>
+          <div><span style="color: var(--text-muted);">location:</span> <span style="color: var(--text);">Jaipur, Rajasthan, India</span></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <h3>Send a message</h3>
+        <p style="margin-bottom: 20px;">
+          This form opens a pre-filled email in your mail client — nothing is stored or sent to a server.
+        </p>
+        <form class="contact-form" id="contact-form">
+          <div>
+            <label for="name">name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div>
+            <label for="email">email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div>
+            <label for="message">message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn">send message →</button>
+          <div class="form-status" id="form-status"></div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© 2026 Saksham Jain — built with curiosity & terraform apply</div>
+      <div style="margin-top:10px;">
+        <a href="mailto:sakshamsj02@gmail.com">email</a>
+        <a href="https://www.linkedin.com/in/sakshamjain02/" target="_blank" rel="noopener">linkedin</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+
+      const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+
+      window.location.href = `mailto:sakshamsj02@gmail.com?subject=${subject}&body=${body}`;
+      document.getElementById("form-status").textContent = "opening your email client...";
+    });
+  </script>
+</body>
+</html>

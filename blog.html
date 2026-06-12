@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Saksham Jain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-prompt">
+        <span class="user">saksham</span><span class="at">@</span><span class="host">devops</span>:~$<span class="cursor"></span>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">menu</button>
+      <div class="nav-links">
+        <a href="index.html">home</a>
+        <a href="experience.html">experience</a>
+        <a href="projects.html">projects</a>
+        <a href="skills.html">skills</a>
+        <a href="blog.html" class="active">blog</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container page-header">
+    <div class="section-label">tail -f /var/log/blog</div>
+    <h1>Blog</h1>
+    <p>Notes from production — AWS, IaC, and security in regulated environments.</p>
+  </header>
+
+  <section class="section container">
+    <div class="grid-2 reveal">
+
+      <a href="blog-iam-least-privilege.html" class="card blog-card">
+        <div class="blog-meta">
+          <span>2026-02-10</span>
+          <span>6 min read</span>
+        </div>
+        <h3><a href="blog-iam-least-privilege.html">Getting to least-privilege IAM without breaking everything</a></h3>
+        <p>A practical approach to tightening IAM policies in a live AWS account — how I remediated dozens of over-permissioned roles without a single outage.</p>
+        <div class="tag-row">
+          <span class="tag">IAM</span>
+          <span class="tag">Security Hub</span>
+          <span class="tag">AWS</span>
+        </div>
+      </a>
+
+      <a href="blog-cicd-pipeline.html" class="card blog-card">
+        <div class="blog-meta">
+          <span>2026-01-22</span>
+          <span>5 min read</span>
+        </div>
+        <h3><a href="blog-cicd-pipeline.html">Cutting deploy time by 80% with Jenkins and Docker</a></h3>
+        <p>The pipeline redesign that took us from manual, error-prone deploys to zero-downtime releases — and the small changes that had the biggest impact.</p>
+        <div class="tag-row">
+          <span class="tag">Jenkins</span>
+          <span class="tag">Docker</span>
+          <span class="tag">CI/CD</span>
+        </div>
+      </a>
+
+      <a href="blog-terraform-provisioning.html" class="card blog-card">
+        <div class="blog-meta">
+          <span>2025-12-05</span>
+          <span>7 min read</span>
+        </div>
+        <h3><a href="blog-terraform-provisioning.html">Terraform modules that actually reduce provisioning errors</a></h3>
+        <p>How standardizing on reusable Terraform modules cut manual provisioning mistakes by ~60% across EC2, IAM, S3, and RDS.</p>
+        <div class="tag-row">
+          <span class="tag">Terraform</span>
+          <span class="tag">IaC</span>
+          <span class="tag">EC2</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© 2026 Saksham Jain — built with curiosity & terraform apply</div>
+      <div style="margin-top:10px;">
+        <a href="mailto:sakshamsj02@gmail.com">email</a>
+        <a href="https://www.linkedin.com/in/sakshamjain02/" target="_blank" rel="noopener">linkedin</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

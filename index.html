@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saksham Jain — DevOps & Cloud Engineer</title>
+  <meta name="description" content="Saksham Jain — DevOps & Cloud Engineer specializing in AWS, CI/CD, and Infrastructure as Code." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-prompt">
+        <span class="user">saksham</span><span class="at">@</span><span class="host">devops</span>:~$<span class="cursor"></span>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">menu</button>
+      <div class="nav-links">
+        <a href="index.html" class="active">home</a>
+        <a href="experience.html">experience</a>
+        <a href="projects.html">projects</a>
+        <a href="skills.html">skills</a>
+        <a href="blog.html">blog</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="container hero">
+    <div>
+      <div class="hero-eyebrow">whoami</div>
+      <h1>Saksham Jain<br>builds <span class="accent">reliable</span> cloud infrastructure.</h1>
+      <p class="hero-sub">
+        DevOps &amp; Cloud Engineer with 1+ year shipping production AWS systems — CI/CD automation,
+        zero-trust IAM, and 99.9% uptime SLAs. Based in Jaipur, Rajasthan, India.
+      </p>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn">get in touch</a>
+        <a href="experience.html" class="btn secondary">view experience →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">99.9%</div>
+          <div class="stat-label">uptime SLA</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">80%</div>
+          <div class="stat-label">faster deploys</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">600+</div>
+          <div class="stat-label">findings remediated</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">saksham@devops — zsh</span>
+      </div>
+      <div class="terminal-body" id="hero-terminal"></div>
+    </div>
+  </header>
+
+  <!-- ===== SUMMARY ===== -->
+  <section class="section container">
+    <div class="section-label">summary</div>
+    <h2>Production AWS at scale, secured by default.</h2>
+    <div class="grid-3 reveal">
+      <div class="card">
+        <h3>Infrastructure</h3>
+        <p>Architects and operates AWS (EC2, EKS, S3, RDS, VPC) for production workloads with strict uptime SLAs and Auto Scaling-driven fault tolerance.</p>
+      </div>
+      <div class="card">
+        <h3>CI/CD &amp; Automation</h3>
+        <p>Owns end-to-end pipelines with Jenkins, Docker, and GitHub Actions — cutting release overhead by 80% with zero-downtime deploys.</p>
+      </div>
+      <div class="card">
+        <h3>Security &amp; Compliance</h3>
+        <p>Remediated 600+ findings across Security Hub and Prisma Cloud, eliminating credential leakage with Secrets Manager and least-privilege IAM.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUICK LINKS ===== -->
+  <section class="section container">
+    <div class="section-label">explore</div>
+    <h2>Where to next?</h2>
+    <div class="grid-3 reveal">
+      <a href="experience.html" class="card">
+        <h3>Experience →</h3>
+        <p>Roles at Vrise Tech and Regex Software — what I built, owned, and shipped.</p>
+      </a>
+      <a href="projects.html" class="card">
+        <h3>Projects →</h3>
+        <p>WAR remediation, DevSecOps enablement, and a live production deployment.</p>
+      </a>
+      <a href="blog.html" class="card">
+        <h3>Blog →</h3>
+        <p>Notes on AWS, IaC, and lessons from regulated production environments.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© 2026 Saksham Jain — built with curiosity & terraform apply</div>
+      <div style="margin-top:10px;">
+        <a href="mailto:sakshamsj02@gmail.com">email</a>
+        <a href="https://www.linkedin.com/in/sakshamjain02/" target="_blank" rel="noopener">linkedin</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    typeTerminal("hero-terminal", [
+      { type: "cmd", text: "whoami" },
+      { type: "out", html: "saksham-jain" },
+      { type: "cmd", text: "cat role.txt" },
+      { type: "out", html: "<span class='k'>role:</span> <span class='v'>DevOps & Cloud Engineer</span>\n<span class='k'>location:</span> <span class='v'>Jaipur, Rajasthan, IN</span>\n<span class='k'>focus:</span> <span class='v'>AWS · CI/CD · IaC · Security</span>" },
+      { type: "cmd", text: "kubectl get status" },
+      { type: "out", html: "<span class='k'>uptime:</span> <span class='v'>99.9%</span>   <span class='k'>availability:</span> <span class='v'>open to work</span>" },
+    ], { speed: 28, lineDelay: 400 });
+  </script>
+</body>
+</html>

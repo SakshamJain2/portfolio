@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cutting deploy time by 80% with Jenkins and Docker — Saksham Jain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-prompt">
+        <span class="user">saksham</span><span class="at">@</span><span class="host">devops</span>:~$<span class="cursor"></span>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">menu</button>
+      <div class="nav-links">
+        <a href="index.html">home</a>
+        <a href="experience.html">experience</a>
+        <a href="projects.html">projects</a>
+        <a href="skills.html">skills</a>
+        <a href="blog.html" class="active">blog</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container page-header">
+    <div class="section-label">posts/cicd-pipeline.md</div>
+    <h1>Cutting deploy time by 80% with Jenkins and Docker</h1>
+    <p>2026-01-22 · 5 min read</p>
+  </header>
+
+  <article class="section container blog-post-body reveal" style="max-width: 760px;">
+    <p>
+      When I joined, deploys were a manual, multi-step process: SSH into a box, pull the
+      latest code, restart services, and hope nothing broke. It worked, but it was slow,
+      error-prone, and entirely dependent on whoever was on call knowing the exact sequence
+      of steps. Redesigning this pipeline cut our release overhead by roughly 80% and made
+      daily releases routine instead of risky.
+    </p>
+
+    <h2>Containerize first</h2>
+    <p>
+      The single highest-leverage change was moving the application into Docker. Once the
+      app and its dependencies were packaged into an image, "deploying" stopped meaning
+      "configure a server" and started meaning "run this image." Environment drift —
+      the classic "works on staging, breaks on prod" problem — mostly disappeared.
+    </p>
+
+    <pre><code>FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY . .
+EXPOSE 3000
+CMD ["node", "server.js"]</code></pre>
+
+    <h2>Let Jenkins own the boring parts</h2>
+    <p>
+      With a Jenkins pipeline, every push to <code>main</code> triggers a build, runs tests,
+      builds the Docker image, pushes it to the registry, and deploys it. The pipeline stages
+      map directly to the steps a human used to do manually — the difference is they now run
+      identically every time, in minutes, with full logs.
+    </p>
+
+    <pre><code>pipeline {
+  agent any
+  stages {
+    stage('Build')   { steps { sh 'docker build -t app:${BUILD_NUMBER} .' } }
+    stage('Test')    { steps { sh 'docker run app:${BUILD_NUMBER} npm test' } }
+    stage('Push')    { steps { sh 'docker push registry/app:${BUILD_NUMBER}' } }
+    stage('Deploy')  { steps { sh './deploy.sh ${BUILD_NUMBER}' } }
+  }
+}</code></pre>
+
+    <h2>Zero-downtime with rolling deploys</h2>
+    <p>
+      The deploy script doesn't kill the old container before the new one is healthy. It
+      starts the new version, waits for a health check to pass, switches traffic over, and
+      only then retires the old container. This single change removed the brief outage
+      window that used to accompany every release.
+    </p>
+
+    <h2>What this unlocked</h2>
+    <p>
+      Beyond the raw time savings, the bigger shift was psychological — releases stopped
+      being scary events scheduled around "safe" windows and became routine. That's what
+      let us move to daily releases, and it freed up the time previously spent on manual
+      deploy babysitting for actual engineering work like Auto Scaling tuning and dashboard
+      improvements that further cut our mean time to detect by ~40%.
+    </p>
+
+    <p style="margin-top: 40px;">
+      <a href="blog.html">← back to blog</a>
+    </p>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© 2026 Saksham Jain — built with curiosity & terraform apply</div>
+      <div style="margin-top:10px;">
+        <a href="mailto:sakshamsj02@gmail.com">email</a>
+        <a href="https://www.linkedin.com/in/sakshamjain02/" target="_blank" rel="noopener">linkedin</a>
+        <a href="contact.html">contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
